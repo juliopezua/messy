@@ -30,7 +30,7 @@ videoLinksArray.forEach(
 	videoLink => videoLink.addEventListener('click', selectVideo ))
 
 function selectVideo(){
-	removeActiveClass()
+	removeActiveClass('video')
 	const videoToPlay = this.getAttribute('href')
 	iFrame.setAttribute('src', videoToPlay)
 	this.classList.add('active')
@@ -38,9 +38,9 @@ function selectVideo(){
 	event.preventDefault()
 }
 
-function removeActiveClass(){
-	videoLinksArray.forEach( videoLink => videoLink.classList.remove('active'))
-}
+// function removeActiveClass(){
+// 	videoLinksArray.forEach( videoLink => videoLink.classList.remove('active'))
+// }
 
 
 
@@ -57,22 +57,45 @@ subnavLinksArray.forEach( subnavLink => subnavLink.addEventListener('click', ope
 subnavLinksArray[0].nextElementSibling.classList.add('active')
 
 function openAccordion(){
-	removeActiveClass()
+	removeActiveClass('accordion')
 	this.nextElementSibling.classList.toggle('active')
 	event.preventDefault()
 }
 
-function removeActiveClass(){
-	subnavLinksArray.forEach( subnavLink => subnavLink.nextElementSibling.classList.remove('active'))
+function removeActiveClass(locale){
+    if (locale === 'accordion') {
+        subnavLinksArray.forEach( subnavLink => subnavLink.nextElementSibling.classList.remove('active'))
+    } else if (locale === 'video') {
+        videoLinksArray.forEach( videoLink => videoLink.classList.remove('active'))
+    }
 }
 
 
 
+// $('.image-tn a').on('click tap', function(){
+//     var imgsrc = $(this).attr('href');
+//     var titleText = $(this).find('img').attr('title');
+//     $('figure > img').attr('src', imgsrc);
+//     $('figcaption').html(titleText);
+//     return false;
+// });
 
 
 
+const carouselLinks = document.querySelectorAll('.image-tn a')
+const carousel = document.querySelector('figure img')
+const carouselPara = document.querySelector('figcaption')
 
+carouselLinks.forEach(carouselLink => carouselLink.addEventListener('click', runCarousel))
+function runCarousel(){
+	const imageHref = this.getAttribute('href')
+	carousel.setAttribute('src', imageHref)
+	 const titleText = this.firstChild.title
+	carouselPara.innerHTML = titleText
 
+	console.log('titleText')
+	event.preventDefault()
+}
 
 
 
